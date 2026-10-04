@@ -1,0 +1,27 @@
+# --- Data: never commit (train.csv is 229 MB > GitHub's 100 MB limit) ---
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+# data/annotations/ IS committed (small, human-made labels)
+
+# --- Python / Jupyter ---
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+
+# --- Environments ---
+.venv/
+venv/
+env/
+.env
+
+# --- OS / editors ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- Packaging for delivery ---
+*.zip
