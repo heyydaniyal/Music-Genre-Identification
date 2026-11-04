@@ -1,7 +1,10 @@
-"""Plot style and shared plotting helpers (one consistent look across all notebooks).
+"""One fixed colour per genre, so a genre looks the same in every figure of notebooks 04 and 05."""
 
-Planned API:
-    set_style()                          # called once by notebooks/_setup.py
-    GENRE_COLORS: dict                   # fixed colour per genre
-    save_fig(fig, name)                  # results/figures/<name>.png
-"""
+GENRE_COLORS = {
+    "pop": "#e75480",
+    "rap": "#4c72b0",
+    "rock": "#55a868",
+    "rb": "#8172b2",
+    "country": "#dd8452",
+    "misc": "#8c8c8c",
+}
