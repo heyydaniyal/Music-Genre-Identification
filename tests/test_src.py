@@ -65,7 +65,8 @@ def test_vader_song_scores_and_cache():
     assert list(out.index) == [10, 11, 12]
     assert out.loc[10, "n_lines"] == 3 and out.loc[10, "pos_share"] == pytest.approx(2 / 3)
     assert np.isnan(out.loc[11, "vader_mean"]) and out.loc[11, "n_lines"] == 0
-    assert out.loc[12, "vader_mean"] == 0
+    assert out.loc[12, "vader_mean"] == 0 and out.loc[12, "mean_line_chars"] == 8
+    assert out.loc[11, "mean_line_chars"] == 0
     uniq = sentiment.vader_song_scores(texts, analyzer, cache, unique_lines=True)
     assert uniq.loc[10, "n_lines"] == 2
     assert set(cache) == {"I love you", "I hate this", "la la la"}
@@ -143,3 +144,19 @@ def test_log_experiment_replaces_row(tmp_paths):
     assert len(log) == 1 and log.loc[0, "cv_macro_f1_mean"] == 0.6
     with pytest.raises(ValueError):
         evaluation.log_experiment("E2", not_a_column=1)
+
+
+# ---------------- features ----------------
+def test_hstack_csr_matches_scipy():
+    from scipy import sparse
+    from src.features import hstack_csr
+    a = sparse.random(53, 7, density=0.3, format="csr", random_state=1)
+    a = sparse.csr_matrix(a.toarray() * (np.arange(53) != 5)[:, None])   # row 5 empty
+    b = sparse.random(53, 11, density=0.2, format="csr", random_state=2)
+    expected = sparse.hstack([a, b], format="csr")
+    got = hstack_csr(a, b, chunk_rows=10)
+    assert got.shape == expected.shape
+    assert (got != expected).nnz == 0
+    assert np.array_equal(got.indptr, expected.indptr) and np.array_equal(got.indices, expected.indices)
+    with pytest.raises(ValueError):
+        hstack_csr(a, b[:10])

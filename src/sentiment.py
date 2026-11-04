@@ -72,13 +72,19 @@ def summarise_lines(scores) -> dict:
 
 
 def vader_song_scores(texts: pd.Series, analyzer, cache: dict, unique_lines: bool = False) -> pd.DataFrame:
-    """Line-level VADER summarised per song. unique_lines=True counts a repeated line (e.g. a chorus) only once."""
+    """Line-level VADER summarised per song. unique_lines=True counts a repeated line (e.g. a chorus) only once.
+
+    mean_line_chars is returned too: a very high value means the lyrics have no real line breaks, so "lines" are
+    whole paragraphs and the per-line score saturates like a whole-song score would.
+    """
     rows = []
     for text in texts:
         lines = lyric_lines(text)
         if unique_lines:
             lines = list(dict.fromkeys(lines))
-        rows.append(summarise_lines(score_lines(lines, analyzer, cache)))
+        row = summarise_lines(score_lines(lines, analyzer, cache))
+        row["mean_line_chars"] = np.mean([len(line) for line in lines]) if lines else 0.0
+        rows.append(row)
     return pd.DataFrame(rows, index=texts.index)
 
 

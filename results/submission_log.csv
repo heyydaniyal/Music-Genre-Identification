@@ -1,1 +1,2 @@
 version,file_name,date,exp_id,sha256,cv_macro_f1,public_lb_macro_f1,notes
+02,Group15_Version02.csv,2026-11-04,03_final,469488a4113aac258beaf408e6f9b7e37a816b61ccafe3fc6ced9eec250f47e2,0.5342,,"word (1,2) + char_wb (3,5) TF-IDF, balanced LinearSVC C=0.1, trained on the 80% split"

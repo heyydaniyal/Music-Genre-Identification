@@ -20,6 +20,7 @@ Music-Genre-Identification/
 ├── src/
 │   ├── config.py           paths, columns, labels, seed: the single source of truth
 │   ├── data.py             load the processed files passed between notebooks
+│   ├── features.py         low-memory side-by-side stacking of sparse matrices (notebook 03)
 │   ├── sentiment.py        line-level VADER, TextBlob, profanity list
 │   ├── stats.py            Kruskal-Wallis, Cliff's delta, Holm, bootstrap CIs
 │   ├── submission.py       Kaggle file writing (validated), hashing, logging

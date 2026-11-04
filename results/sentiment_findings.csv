@@ -1,0 +1,22 @@
+question,measure,value
+Method check,"Spearman, VADER (per line) vs TextBlob, all songs",0.563
+SQ1 genre,"most negative genre (rap), median vader_mean",-0.019
+SQ1 genre,"most positive genre (country), median vader_mean",0.054
+SQ1 genre,epsilon squared (share of sentiment variation explained by genre),0.079
+SQ2 profanity,"Cliff's delta rap vs pop, VADER as is",-0.304
+SQ2 profanity,"Cliff's delta rap vs pop, profanity neutral",-0.076
+SQ3 time,"Spearman year vs sentiment, pop",-0.008
+SQ3 time,"Spearman year vs sentiment, rap",-0.012
+SQ3 time,"Spearman year vs sentiment, rock",-0.081
+SQ3 time,"Spearman year vs sentiment, rb",-0.158
+SQ3 time,"Spearman year vs sentiment, country",-0.097
+SQ4 popularity,"Spearman sentiment vs views rank in year, pop",0.073
+SQ4 popularity,"Spearman sentiment vs views rank in year, rap",-0.059
+SQ4 popularity,"Spearman sentiment vs views rank in year, rock",0.079
+SQ4 popularity,"Spearman sentiment vs views rank in year, rb",0.004
+SQ4 popularity,"Spearman sentiment vs views rank in year, country",-0.018
+SQ5 chorus,"median chorus - verse, pop",0.013
+SQ5 chorus,"median chorus - verse, rap",0.009
+SQ5 chorus,"median chorus - verse, rock",0.011
+SQ5 chorus,"median chorus - verse, rb",0.014
+SQ5 chorus,"median chorus - verse, country",0.007
