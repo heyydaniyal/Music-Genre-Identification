@@ -1,2 +1,2 @@
 version,file_name,date,exp_id,sha256,cv_macro_f1,public_lb_macro_f1,notes
-02,Group15_Version02.csv,2026-11-05,03_final,e66019a78149c1f66b519fe8b3cd487a67c65c85ee5d1be0a58e427483609b44,0.5342,,"word (1,2) + char_wb (3,5) TF-IDF, balanced LinearSVC C=0.1, refit on all training songs"
+2,Group15_Version02.csv,2026-11-05,03_final,e66019a78149c1f66b519fe8b3cd487a67c65c85ee5d1be0a58e427483609b44,0.5342,0.551,"word (1,2) + char_wb (3,5) TF-IDF, balanced LinearSVC C=0.1, refit on all training songs"
