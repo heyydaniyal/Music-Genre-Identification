@@ -14,6 +14,7 @@ One row per decision. IDs match the project roadmap (§9.3).
 | D9 | 2026-10-04 | Claude drafts and explains the code; Dani reviews, runs and defends every cell | Answer to Q10 |
 | D10 | 2026-11-04 | misc excluded from the sentiment analysis | Notebook 01: misc is mostly literature, scripts and tables, not music |
 | D11 | 2026-11-04 | VADER (main, scored per line) + TextBlob (cross-check). No other lexicons | Both taught in the sentiment practical class (slides "07_Sentiment_Analysis") |
-| D12 | 2026-11-04 | Sentiment on a random sample of up to 10,000 songs per genre (seed 42) | Full corpus takes > 10 min for VADER + TextBlob; notebook 04 runs in about 3.5 min |
-| D13 | 2026-11-04 | Drop songs with < 5 lines or mean line length > 150 characters from the sentiment analysis (1.6% of the sample) | Reading the extremes showed lyrics without line breaks saturating at ±1 |
+| D12 | 2026-11-05 | Sentiment on **all** songs of the five music genres, no sampling (an earlier 10,000-per-genre sample was dropped) | Dani: runtime is not a constraint; results then describe the whole training set |
+| D13 | 2026-11-04 | Drop songs with < 5 lines or mean line length > 150 characters from the sentiment analysis | Reading the extremes showed lyrics without line breaks saturating at ±1 |
 | D14 | 2026-11-04 | No human-labelled sentiment validation; method checked with test lines, whole-song comparison, TextBlob agreement and reading extremes | Dani's decision; stated as the main limitation in notebook 05 |
+| D15 | 2026-11-05 | Final Kaggle model refit on 100% of the training songs (same settings as notebook 03 Section 7) | Dani: memory is not a constraint; needs ~6 GB RAM at peak, so run on ≥ 8 GB (16 GB comfortable) |

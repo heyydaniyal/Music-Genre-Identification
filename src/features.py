@@ -3,7 +3,7 @@ import numpy as np
 from scipy import sparse
 
 
-def hstack_csr(left, right, chunk_rows: int = 20_000):
+def hstack_csr(left, right, chunk_rows: int = 2_000):
     """Put two CSR matrices side by side, like scipy.sparse.hstack, using much less memory.
 
     scipy's hstack first concatenates all the data of both inputs and then builds the result, so it briefly needs about

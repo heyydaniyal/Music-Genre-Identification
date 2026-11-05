@@ -6,32 +6,33 @@ Defence notes, not part of the report.
 
 ## Notebook 03, Section 11: final model and Kaggle submission
 
-**Which model is submitted?** Exactly the one evaluated in Section 7: word + character TF-IDF with a balanced Linear SVM
-(C = 0.1), trained on the 80% split. Its scores: holdout macro F1 0.541, 5-fold CV 0.534 ± 0.004.
+**Which model is submitted?** The Section 7 configuration (word + character TF-IDF, balanced Linear SVM, C = 0.1)
+**refitted on all 134,789 training songs**. Section 7 trained on 80% so the other 20% could measure performance; once
+the settings are fixed that 20% has done its job, and using it gives the rare genres about 25% more examples. The CV score
+(0.534 ± 0.004) and holdout score (0.541) describe this configuration. The refitted model agrees with the 80% model on
+93.2% of the test songs.
 
-**Why not refit on 100% of the songs?** That is the usual last step (25% more examples for the rare genres). We tried it:
-memory reached 5.2 GB just after building the character vocabulary on all songs, and the process was killed on a 6 GB
-machine. A notebook that crashes on the graders' laptops is "severely penalized", so the refit stays as a commented cell
-with the reason, and we submit the model whose scores we measured. Defence answer: "we traded a small expected gain for
-reproducibility; the submitted model is exactly the evaluated one".
+**Memory.** The refit is the heaviest step: the word + character matrix of all songs is over 2 GB and LinearSVC
+(liblinear) makes its own internal copy (~3 GB) while training. Peak ≈ 6 GB → run on a machine with ≥ 8 GB RAM,
+16 GB comfortable. On a smaller machine, the fallback is the Section 7 model (trained on 80%).
 
 **The pipeline, step by step**
-1. `tfidf_bigram_vectorizer` (already fitted on the training split): turns each test song into word TF-IDF weights
-   (unigrams + bigrams, `min_df=10` = words seen in fewer than 10 training songs are ignored).
-2. `char_tfidf_vectorizer` (already fitted): the same with pieces of 3–5 characters inside word boundaries (`char_wb`).
+1. `final_word_vectorizer.fit_transform(X)`: learns the word vocabulary from all training lyrics and turns each song into
+   TF-IDF weights (unigrams + bigrams, `min_df=10` = words in fewer than 10 songs are ignored).
+2. `final_char_vectorizer.fit_transform(X)`: the same with pieces of 3–5 characters inside word boundaries (`char_wb`).
    It catches spelling variants and slang ("lovin", "luv").
-3. `hstack_csr`: glues the two matrices side by side → one row per song, ~365,000 columns.
-4. `linear_svm_combined_tuned.predict`: one linear scorer per genre; the highest score wins (Annex A).
-5. Vectorizers are only *applied* to the test set (`transform`), never fitted on it → no test information leaks in.
+3. `hstack_csr`: glues the two matrices side by side → one row per song, 422,718 columns.
+4. `LinearSVC(C=0.1, class_weight="balanced").fit`: one linear scorer per genre; the highest score wins (Annex A).
+5. The test lyrics are only *transformed* with the fitted vectorizers, never fitted on → no test information leaks in.
 
-**Memory (why `hstack_csr` and the `del` lines exist).** The character matrix is ~1.5 GB. scipy's `hstack` briefly
-needs about twice the result's size in extra memory, which crashed the notebook on a 6 GB limit (= an 8 GB laptop with
-the OS running). `hstack_csr` (in `src/features.py`) builds the same matrix block by block; a test checks it is identical
-to scipy's result. The notebook also loads only the `id`, `clean` and `tag` columns and deletes matrices once they are no
-longer needed. None of this changes any result.
+**Why `hstack_csr` and the `del` lines exist.** scipy's `hstack` briefly needs about twice the result's size in extra
+memory, which crashed the notebook. `hstack_csr` (in `src/features.py`) builds the same matrix block by block; a test
+checks it is identical to scipy's result. The notebook also loads only the `id`, `clean` and `tag` columns and deletes
+matrices once they are no longer needed. None of this changes any result.
 
-**Sanity check.** Without test labels we compare the share of each predicted genre with the training shares and the
-validation predictions. A broken pipeline would show up as a strange distribution (e.g. everything pop).
+**Sanity checks.** Without test labels we (1) compare the share of each predicted genre with the validation predictions,
+and (2) check that the refitted model mostly agrees with the 80% model (93.2%). A broken pipeline would show up as a
+strange distribution (e.g. everything pop) or low agreement.
 
 **`write_submission`** refuses to write if: wrong number of rows, duplicated ids, ids different from Kaggle's sample file,
 or an unknown genre. **SHA-256** is a fingerprint of the file's bytes: same hash = same file, byte for byte.

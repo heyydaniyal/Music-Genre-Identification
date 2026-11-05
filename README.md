@@ -49,6 +49,12 @@ nbstripout --install      # strips notebook outputs from git commits only (not f
 
 Download the competition data and place the three CSVs in `data/raw/`.
 
+## Hardware and runtime
+
+A full run takes about 35 minutes on a laptop CPU (notebook 03 about 15–20 min, notebook 04 about 12 min).
+Notebook 03's final refit on all songs needs about **6 GB of RAM** at its peak: use a machine with at least 8 GB
+(16 GB is comfortable).
+
 ## Run
 
 Open the notebooks in order 01 → 05, or run them all:
