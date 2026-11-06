@@ -8,7 +8,7 @@ One row per decision. IDs match the project roadmap (§9.3).
 | D2 | 2026-10-04 | One notebook per phase (01–05) plus a shared `src/` package; notebook markdown is the report | Answers to Q4, Q7 |
 | D3 | 2026-11 | Validation: stratified 80/20 holdout (seed 42) for model selection; stratified 5-fold CV for the final configuration | Notebook 03, Sections 2 and 7 |
 | D4 | 2026-10-04 | No transformers, no pretrained embeddings or models | Answer to Q6 ("no pretrained") |
-| D5 | 2026-11 | Cleaning frozen as in notebook 02 (lowercase, section tags as tokens, stopwords kept); final representation word (1,2) + char_wb (3,5) TF-IDF, balanced LinearSVC C=0.1 | Notebook 03: holdout macro F1 0.541, CV 0.534 ± 0.004; stopword and section-token checks in Section 5 |
+| D5 | 2026-11 | Cleaning frozen as in notebook 02 (lowercase, section tags as tokens, stopwords kept); final representation word (1,2) + char_wb (3,5) TF-IDF, balanced LinearSVC C=0.1 | Notebook 03: holdout macro F1 0.541, CV 0.534 ± 0.004, Kaggle 0.551; stopword, section-token and chi-square feature-selection checks in Section 5 (keeping all features is best) |
 | D6 | 2026-11-04 | Sentiment questions: SQ1 genre, SQ2 profanity, SQ3 decades, SQ4 popularity (within year), SQ5 chorus vs verse | Brief questions (a)–(c) + hypotheses in notebook 01 |
 | D8 | 2026-10-04 | Deliver by Sat 12 Dec (latest Sun 13 Dec 17:59) for the full +1 early bonus | Answer to Q2 |
 | D9 | 2026-10-04 | Claude drafts and explains the code; Dani reviews, runs and defends every cell | Answer to Q10 |

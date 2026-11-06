@@ -30,7 +30,8 @@ def write_submission(ids, preds, version: int):
     sub = sample[[config.ID_COL]].merge(sub, on=config.ID_COL, how="left")
 
     path = config.SUBMISSIONS_DIR / f"{config.GROUP_ID}_Version{version:02d}.csv"
-    sub.to_csv(path, index=False, encoding=config.ENCODING)
+    # "\n" line endings on every OS, so the file (and its SHA-256) is identical on Windows, macOS and Linux
+    sub.to_csv(path, index=False, encoding=config.ENCODING, lineterminator="\n")
     return path
 
 

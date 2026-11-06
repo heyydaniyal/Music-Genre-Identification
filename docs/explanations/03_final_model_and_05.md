@@ -37,6 +37,11 @@ strange distribution (e.g. everything pop) or low agreement.
 **`write_submission`** refuses to write if: wrong number of rows, duplicated ids, ids different from Kaggle's sample file,
 or an unknown genre. **SHA-256** is a fingerprint of the file's bytes: same hash = same file, byte for byte.
 
+**Feature selection (Section 5).** `min_df=10` cut word features from 1.26 M (min_df 2) to 253 k. A chi-square
+`SelectKBest` sweep then kept only the top-k features: macro F1 0.513 (k=5k), 0.517 (10k), 0.524 (25k), 0.525 (50k),
+0.529 (100k), 0.532 (150k), 0.532 (all). More is always better, so no chi-square selection. Chi-square = how unevenly a
+word is spread across genres compared with what you'd expect if it were unrelated to genre.
+
 **Defence questions**
 - *Why balanced class weights?* Macro F1 averages the six genres equally, so country (2.6% of songs) counts as much as
   pop (41%). Without weights the model mostly ignores country and rb.

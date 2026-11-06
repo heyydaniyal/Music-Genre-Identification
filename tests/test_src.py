@@ -115,6 +115,7 @@ def test_write_submission_valid_and_ordered(tmp_paths):
     assert path.name == f"{config.GROUP_ID}_Version07.csv"
     out = pd.read_csv(path)
     assert list(out["id"]) == [3, 1, 2] and list(out["tag"]) == ["pop", "rap", "rock"]
+    assert b"\r" not in path.read_bytes()          # same bytes, so same hash, on every OS
 
 
 @pytest.mark.parametrize("ids, preds", [
